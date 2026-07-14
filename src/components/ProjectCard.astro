@@ -49,10 +49,12 @@ const imageUrl = image.startsWith('/') ? `${base}${image}` : image;
       <h3 class="text-sm font-semibold text-slate-800">工程实践</h3>
       <p class="mt-1 text-sm leading-6 text-slate-600">{engineering}</p>
     </section>
-    <div class="mt-auto pt-6">
+    <div class="mt-auto grid grid-cols-2 gap-3 pt-6">
       {demoUrl
-        ? <a href={demoUrl} class="block rounded-card bg-primary px-4 py-2 text-center text-sm font-semibold text-slate-800 hover:bg-primary-hover" target="_blank" rel="noreferrer">直接访问网站</a>
+        ? <a href={demoUrl} class="block rounded-card bg-primary px-4 py-2 text-center text-sm font-semibold text-slate-800 hover:bg-primary-hover">在线演示</a>
         : <span class="block cursor-not-allowed rounded-card bg-slate-100 px-4 py-2 text-center text-sm font-semibold text-slate-400">网站暂未公开</span>}
+      <a href={repositoryUrl} class="block rounded-card border border-slate-200 px-4 py-2 text-center text-sm font-semibold text-slate-800 hover:bg-primary" target="_blank" rel="noreferrer">GitHub 仓库</a>
     </div>
+    {demoUrl && <p class="mt-3 break-all text-center text-[11px] leading-5 text-slate-400">演示地址：{demoUrl}</p>}
   </div>
 </article>
