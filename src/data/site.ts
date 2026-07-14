@@ -115,7 +115,7 @@ export const projects = [
     result: '形成集知识记录、错题复盘、课程资料检索和学习统计于一体的本地学习档案。当前资料中心覆盖软件工程、计算机组成原理、离散数学、数据结构与算法等课程；第三方教材与答案仅保存在个人本地环境，不随公开仓库分发。',
     highlights: ['课程资料分类与组合筛选', '笔记与错题本地管理', '课程概览和学习统计', '深浅色主题与响应式界面'],
     engineering: '通过统一资料元数据管理本地文件与外部链接，按课程和文件类型动态分组；使用 LocalStorage 保存个人笔记、错题与界面主题，同时将受版权保护的课程资料与公开代码仓库隔离。',
-    demoUrl: 'https://xiaoyf-debug.github.io/software-engineering-portfolio/notes/',
+    demoUrl: 'https://xiaoyf-debug.github.io/software-engineering-portfolio/study-notes/',
     repositoryUrl: 'https://github.com/xiaoyf-debug/study_notes_web',
   },
 ] satisfies Array<{
