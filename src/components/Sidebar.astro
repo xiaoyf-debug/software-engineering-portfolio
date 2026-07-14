@@ -1,0 +1,40 @@
+---
+interface Props {
+  avatar: string;
+  name: string;
+  summary: string;
+  skills: string[];
+  githubUrl: string;
+  emails: Array<{ label: string; address: string }>;
+}
+const { avatar, name, summary, skills, githubUrl, emails } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const avatarUrl = avatar.startsWith('/') ? `${base}${avatar}` : avatar;
+---
+
+<aside class="card-surface p-5 lg:sticky lg:top-24">
+  <!-- 头像容器使用固定比例，图片只裁切不拉伸。 -->
+  <div class="mx-auto aspect-square w-32 overflow-hidden rounded-card bg-primary">
+    {avatar && <img src={avatarUrl} alt={name} class="h-full w-full object-cover" loading="eager" />}
+  </div>
+
+  <div class="mt-5 text-center">
+    <h1 class="text-xl font-bold text-slate-950">{name}</h1>
+    <p class="mt-2 text-sm leading-6 text-slate-600">{summary}</p>
+  </div>
+
+  <div class="mt-5 flex flex-wrap justify-center gap-2" aria-label="技能标签">
+    {skills.map((skill) => <span class="rounded-card bg-primary px-2.5 py-1 text-xs font-medium text-slate-700">{skill}</span>)}
+  </div>
+
+  <div class="mt-6 grid gap-2">
+    {githubUrl && <a class="rounded-card border border-slate-200 px-3 py-2 text-center text-sm font-medium hover:bg-primary" href={githubUrl} target="_blank" rel="noreferrer">GitHub</a>}
+    {emails.map((email) => (
+      <a
+        class="rounded-card border border-slate-200 px-3 py-2 text-center text-sm font-medium hover:bg-primary"
+        href={`mailto:${email.address}`}
+        title={email.address}
+      >{email.label}</a>
+    ))}
+  </div>
+</aside>

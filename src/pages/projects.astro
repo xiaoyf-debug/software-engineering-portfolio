@@ -1,0 +1,14 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { projects, siteConfig } from '../data/site';
+---
+
+<Layout title={`项目作品 | ${siteConfig.title}`} description={siteConfig.description}>
+  <section aria-labelledby="page-heading">
+    <h1 id="page-heading" class="text-2xl font-bold text-slate-950">项目作品</h1>
+    <div class="mt-5 grid gap-5 xl:grid-cols-2">
+      {projects.map((project) => <ProjectCard {...project} />)}
+    </div>
+  </section>
+</Layout>

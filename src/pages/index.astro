@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AwardCard from '../components/AwardCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { awards, projects, siteConfig } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Layout title={siteConfig.title} description={siteConfig.description}>
+  <div class="space-y-12">
+    <section class="overflow-hidden rounded-card border border-blue-100 bg-gradient-to-br from-primary via-white to-white p-6 sm:p-8" aria-labelledby="hero-heading">
+      <p class="text-sm font-semibold tracking-[0.18em] text-blue-600">SOFTWARE ENGINEERING PORTFOLIO</p>
+      <h1 id="hero-heading" class="mt-3 max-w-3xl text-3xl font-bold leading-tight text-slate-950 sm:text-4xl">让技术学习沉淀为可靠、可验证的工程实践</h1>
+      <p class="mt-4 max-w-3xl text-base leading-7 text-slate-600">中山大学软件工程专业在读，关注后端开发、AI 应用与算法实践。具备 C/C++、Python 基础及 AI 辅助开发经验，重视代码逻辑、运行测试与结果核验。</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href={`${base}/projects`} class="rounded-card bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700">查看项目</a>
+        <a href={`${base}/portfolio/肖雨菲-软件工程个人作品集.pdf`} download class="rounded-card bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 ring-1 ring-slate-200 hover:bg-primary">下载 PDF 作品集</a>
+        <a href="mailto:xiaoyf66@mail2.sysu.edu.cn" class="rounded-card bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 ring-1 ring-slate-200 hover:bg-primary">联系我</a>
+      </div>
+      <dl class="mt-8 grid grid-cols-2 gap-3">
+        {siteConfig.highlights.map((item) => (
+          <div class="rounded-card border border-white bg-white/80 p-4">
+            <dt class="text-xs text-slate-500">{item.label}</dt>
+            <dd class="mt-1 text-xl font-bold text-slate-950">{item.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+    <section aria-labelledby="awards-heading">
+      <h2 id="awards-heading" class="text-2xl font-bold text-slate-950">竞赛荣誉</h2>
+      <div class="mt-5 grid gap-5">
+        {awards.map((award) => <AwardCard {...award} />)}
+      </div>
+    </section>
+
+    <section aria-labelledby="projects-heading">
+      <h2 id="projects-heading" class="text-2xl font-bold text-slate-950">项目作品</h2>
+      <div class="mt-5 grid gap-5 xl:grid-cols-2">
+        {projects.map((project) => <ProjectCard {...project} />)}
+      </div>
+    </section>
+  </div>
+</Layout>

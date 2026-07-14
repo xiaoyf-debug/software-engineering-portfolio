@@ -1,0 +1,29 @@
+---
+export interface Props {
+  image: string;
+  title: string;
+  award: string;
+  date: string;
+  role: string;
+  description: string;
+}
+const { image, title, award, date, role, description } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const imageUrl = image.startsWith('/') ? `${base}${image}` : image;
+---
+
+<article class="card-surface grid overflow-hidden sm:grid-cols-[minmax(180px,36%)_1fr]">
+  <!-- 证书完整展示，object-contain 可避免证书被裁切或拉伸。 -->
+  <div class="flex min-h-48 items-center justify-center bg-primary/45 p-4">
+    {image && <img src={imageUrl} alt={`${title}证书`} class="max-h-64 h-auto w-full object-contain" loading="lazy" />}
+  </div>
+  <div class="flex flex-col justify-center p-5 sm:p-6">
+    <h2 class="text-lg font-semibold text-slate-950">{title}</h2>
+    <dl class="mt-4 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm">
+      <dt class="text-slate-500">奖项等级</dt><dd class="font-bold text-slate-950">{award}</dd>
+      <dt class="text-slate-500">获奖时间</dt><dd>{date}</dd>
+      <dt class="text-slate-500">参赛角色</dt><dd>{role}</dd>
+    </dl>
+    <p class="mt-4 text-sm leading-6 text-slate-600">{description}</p>
+  </div>
+</article>

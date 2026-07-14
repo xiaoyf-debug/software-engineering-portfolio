@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { aboutConfig, siteConfig } from '../data/site';
+
+const fallback = '待填写';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const portraitUrl = `${base}${aboutConfig.portrait}`;
+---
+
+<Layout title={`关于我 | ${siteConfig.title}`} description={siteConfig.description}>
+  <div class="space-y-6">
+    <section class="card-surface grid gap-6 p-5 sm:grid-cols-[180px_1fr] sm:p-6" aria-labelledby="page-heading">
+      <!-- 证件照仅在个人介绍中出现，完整保持原始比例。 -->
+      <div class="overflow-hidden rounded-card bg-primary/45">
+        <img src={portraitUrl} alt={`${siteConfig.profile.name}证件照`} class="h-auto w-full object-contain" />
+      </div>
+      <div>
+        <h1 id="page-heading" class="text-2xl font-bold text-slate-950">关于我</h1>
+        <p class="mt-4 text-sm leading-7 text-slate-600">{aboutConfig.introduction || fallback}</p>
+        <div class="mt-5 rounded-card bg-primary/55 p-4">
+          <h2 class="text-sm font-semibold text-slate-900">求职方向</h2>
+          <p class="mt-1 text-sm text-slate-600">{aboutConfig.jobTarget || fallback}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card-surface p-5 sm:p-6" aria-labelledby="education-heading">
+      <h2 id="education-heading" class="text-lg font-semibold text-slate-950">教育背景</h2>
+      <dl class="mt-4 grid gap-4 text-sm sm:grid-cols-3">
+        <div><dt class="text-slate-500">学校</dt><dd class="mt-1 font-medium text-slate-900">{aboutConfig.education.school}</dd></div>
+        <div><dt class="text-slate-500">专业</dt><dd class="mt-1 font-medium text-slate-900">{aboutConfig.education.major}</dd></div>
+        <div><dt class="text-slate-500">在读时间</dt><dd class="mt-1 font-medium text-slate-900">{aboutConfig.education.period || fallback}</dd></div>
+      </dl>
+    </section>
+
+    <div class="grid gap-6 xl:grid-cols-2">
+      <section class="card-surface p-5 sm:p-6" aria-labelledby="strengths-heading">
+        <h2 id="strengths-heading" class="text-lg font-semibold text-slate-950">个人优势</h2>
+        {aboutConfig.strengths.length > 0
+          ? <ul class="mt-4 list-disc space-y-2 pl-5 text-sm leading-6 text-slate-600">{aboutConfig.strengths.map((item) => <li>{item}</li>)}</ul>
+          : <p class="mt-4 text-sm text-slate-500">{fallback}</p>}
+      </section>
+      <section class="card-surface p-5 sm:p-6" aria-labelledby="coursework-heading">
+        <h2 id="coursework-heading" class="text-lg font-semibold text-slate-950">核心课程</h2>
+        {aboutConfig.coursework.length > 0
+          ? <div class="mt-4 flex flex-wrap gap-2">{aboutConfig.coursework.map((course) => <span class="rounded-card bg-primary px-3 py-1.5 text-sm">{course}</span>)}</div>
+          : <p class="mt-4 text-sm text-slate-500">{fallback}</p>}
+      </section>
+    </div>
+
+    <div class="grid gap-6 xl:grid-cols-2">
+      <section class="card-surface p-5 sm:p-6" aria-labelledby="focus-heading">
+        <h2 id="focus-heading" class="text-lg font-semibold text-slate-950">当前学习重点</h2>
+        <ul class="mt-4 space-y-3 text-sm leading-6 text-slate-600">
+          {aboutConfig.currentFocus.map((item) => <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500"></span><span>{item}</span></li>)}
+        </ul>
+      </section>
+      <section class="card-surface p-5 sm:p-6" aria-labelledby="plan-heading">
+        <h2 id="plan-heading" class="text-lg font-semibold text-slate-950">近期成长计划</h2>
+        <ul class="mt-4 space-y-3 text-sm leading-6 text-slate-600">
+          {aboutConfig.nearTermPlan.map((item) => <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500"></span><span>{item}</span></li>)}
+        </ul>
+      </section>
+    </div>
+
+  </div>
+</Layout>

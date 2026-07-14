@@ -1,0 +1,58 @@
+---
+export interface Props {
+  image: string;
+  title: string;
+  period: string;
+  status: string;
+  technologies: string[];
+  contribution: string;
+  result: string;
+  highlights: string[];
+  engineering: string;
+  demoUrl: string;
+  repositoryUrl: string;
+}
+const { image, title, period, status, technologies, contribution, result, highlights, engineering, demoUrl, repositoryUrl } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const imageUrl = image.startsWith('/') ? `${base}${image}` : image;
+---
+
+<article class="card-surface flex h-full flex-col overflow-hidden">
+  <!-- 截图区域保持 16:9；object-cover 保持原比例并填满容器。 -->
+  <div class="aspect-video overflow-hidden bg-primary/45">
+    {image && <img src={imageUrl} alt={`${title}项目截图`} class="h-full w-full object-cover" loading="lazy" />}
+  </div>
+  <div class="flex flex-1 flex-col p-5">
+    <div class="flex flex-wrap gap-2" aria-label="技术栈">
+      {technologies.map((technology) => <span class="rounded-card bg-primary px-2.5 py-1 text-xs font-medium">{technology}</span>)}
+    </div>
+    <div class="mt-4 flex flex-wrap items-start justify-between gap-2">
+      <h2 class="text-lg font-semibold text-slate-950">{title}</h2>
+      <span class="rounded-full bg-primary px-2.5 py-1 text-xs font-medium text-slate-600">{status}</span>
+    </div>
+    <p class="mt-1 text-xs text-slate-500">独立开发者 · {period}</p>
+    <section class="mt-4">
+      <h3 class="text-sm font-semibold text-slate-800">个人核心工作</h3>
+      <p class="mt-1 text-sm leading-6 text-slate-600">{contribution}</p>
+    </section>
+    <section class="mt-4">
+      <h3 class="text-sm font-semibold text-slate-800">项目成果</h3>
+      <p class="mt-1 text-sm leading-6 text-slate-600">{result}</p>
+    </section>
+    <section class="mt-4">
+      <h3 class="text-sm font-semibold text-slate-800">功能亮点</h3>
+      <ul class="mt-2 grid gap-1.5 text-sm text-slate-600 sm:grid-cols-2">
+        {highlights.map((item) => <li class="flex gap-2"><span class="text-blue-500">•</span><span>{item}</span></li>)}
+      </ul>
+    </section>
+    <section class="mt-4 rounded-card bg-slate-50 p-3">
+      <h3 class="text-sm font-semibold text-slate-800">工程实践</h3>
+      <p class="mt-1 text-sm leading-6 text-slate-600">{engineering}</p>
+    </section>
+    <div class="mt-auto pt-6">
+      {demoUrl
+        ? <a href={demoUrl} class="block rounded-card bg-primary px-4 py-2 text-center text-sm font-semibold text-slate-800 hover:bg-primary-hover" target="_blank" rel="noreferrer">直接访问网站</a>
+        : <span class="block cursor-not-allowed rounded-card bg-slate-100 px-4 py-2 text-center text-sm font-semibold text-slate-400">网站暂未公开</span>}
+    </div>
+  </div>
+</article>

@@ -1,0 +1,40 @@
+---
+interface NavItem { label: string; href: string }
+interface Props { title: string; navigation: NavItem[] }
+const { title, navigation } = Astro.props;
+const currentPath = Astro.url.pathname;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const withBase = (href: string) => href === '/' ? `${base}/` : `${base}${href}`;
+---
+
+<header class="sticky top-0 z-40 border-b border-slate-100 bg-white/95 backdrop-blur">
+  <div class="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8">
+    <a href={`${base}/`} class="min-w-0 truncate text-base font-semibold text-slate-900">{title}</a>
+    <nav aria-label="主导航" class="hidden overflow-x-auto md:block">
+      <ul class="flex min-w-max items-center gap-1">
+        {navigation.map((item) => (
+          <li>
+            <a
+              href={withBase(item.href)}
+              aria-current={currentPath === withBase(item.href) ? 'page' : undefined}
+              class:list={[
+                'block rounded-card px-3 py-2 text-sm font-medium hover:bg-primary hover:text-slate-950',
+                currentPath === withBase(item.href) ? 'bg-primary text-slate-950' : 'text-slate-600',
+              ]}
+            >{item.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <details class="relative md:hidden">
+      <summary class="cursor-pointer list-none rounded-card bg-primary px-3 py-2 text-sm font-medium text-slate-800">菜单</summary>
+      <nav class="absolute right-0 top-12 w-44 rounded-card border border-slate-200 bg-white p-2 shadow-lg" aria-label="移动端导航">
+        <ul class="grid gap-1">
+          {navigation.map((item) => (
+            <li><a href={withBase(item.href)} class="block rounded-card px-3 py-2 text-sm text-slate-700 hover:bg-primary">{item.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>

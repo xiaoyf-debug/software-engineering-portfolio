@@ -1,0 +1,14 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AwardCard from '../components/AwardCard.astro';
+import { awards, siteConfig } from '../data/site';
+---
+
+<Layout title={`竞赛荣誉 | ${siteConfig.title}`} description={siteConfig.description}>
+  <section aria-labelledby="page-heading">
+    <h1 id="page-heading" class="text-2xl font-bold text-slate-950">竞赛荣誉</h1>
+    <div class="mt-5 grid gap-5">
+      {awards.map((award) => <AwardCard {...award} />)}
+    </div>
+  </section>
+</Layout>

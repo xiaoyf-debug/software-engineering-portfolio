@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #e8f0fe;
+  --color-primary-hover: #d6e4fc;
+  --radius-card: 8px;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply m-0 bg-white text-slate-700 antialiased; }
+  a { @apply transition-colors duration-200; }
+}
+
+@layer components {
+  .card-surface {
+    @apply rounded-card border border-slate-200 bg-white transition duration-200 ease-out;
+  }
+
+  .card-surface:hover {
+    @apply -translate-y-1 border-slate-300 shadow-[0_10px_30px_rgba(15,23,42,0.06)];
+  }
+}

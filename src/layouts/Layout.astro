@@ -1,0 +1,57 @@
+---
+import Header from '../components/Header.astro';
+import Sidebar from '../components/Sidebar.astro';
+import Footer from '../components/Footer.astro';
+import { siteConfig } from '../data/site';
+import '../styles/global.css';
+
+interface Props { title?: string; description?: string }
+const { title = siteConfig.title, description = siteConfig.description } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const socialImage = new URL(`${base}/images/og-portfolio.jpg`, Astro.site);
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: siteConfig.profile.name,
+  url: canonicalUrl.href,
+  image: new URL(`${base}${siteConfig.profile.avatar}`, Astro.site).href,
+  affiliation: { '@type': 'CollegeOrUniversity', name: '中山大学' },
+  knowsAbout: siteConfig.profile.skills,
+  sameAs: [siteConfig.profile.githubUrl],
+};
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#e8f0fe" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+  </head>
+  <body class="min-h-screen">
+    <Header title={siteConfig.title} navigation={siteConfig.navigation} />
+    <!-- 桌面端左右分栏；移动端按 DOM 顺序自动堆叠。 -->
+    <div class="mx-auto grid max-w-7xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[280px_minmax(0,1fr)] lg:px-8">
+      <Sidebar {...siteConfig.profile} />
+      <main class="min-w-0"><slot /></main>
+    </div>
+    <Footer text={siteConfig.footerText} />
+  </body>
+</html>
